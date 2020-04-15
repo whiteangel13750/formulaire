@@ -2,7 +2,7 @@
 
 require 'utilisateurs.php';
 require 'tache.php';
-$route = isset($_POST["route"])? $_POST["route"] : "home";
+$route = isset($_REQUEST["route"])? $_REQUEST["route"] : "home";
 
 switch($route) {
     case "home" : $view = showHome();
@@ -17,13 +17,13 @@ function showHome(): string {
     return "home.html";
 }
 
-setcookie('color', 'blue', time() + 182 * 24 * 60 * 60, '/');
-
 function insertUser() {
    
-$user = new Utilisateurs("","");
+$user = new Utilisateurs();
+$user = setPseudo($pseudo);
+$user = setPassword($password);
 $user->save_user();
-header('Location:home.html');
+header('Location:index.php');
 
 }
 

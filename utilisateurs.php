@@ -1,14 +1,25 @@
 <?php
 
 class Utilisateurs {
+    public $idUtilisateur;
     public $pseudo;
     public $password;
 
-    public function __construct(string $pseudo, string $password){
+    public function __construct(int $idUtilisateur, string $pseudo, string $password){
+        $this->setIdUtilisateur($idUtilisateur);
         $this->setPseudo($pseudo);
         $this->setPassword($password);
     }
 
+    public function getIdUtilisateur() {
+        return $this->idUtilisateur;
+    }
+
+    public function setIdUtilisateur(int $id) {
+        $this->idUtilisateur = $id;
+    }
+
+    
     public function getPseudo($pseudo) {
         return $this->pseudo;
     }
@@ -29,8 +40,19 @@ class Utilisateurs {
         $file = file_get_contents("index.json");
         var_dump($file);
         $tab = json_decode($file, false, 512, 0);
+        $unique = true;
+        foreach($tab as $element){
+            if ($element->pseudo== $this->pseudo){
+                $unique=false;
+            }
+        }
         array_push($tab,["id"=>sizeof($tab)+1,"pseudo"=> $this->pseudo, "password" => $this->password]);
-        file_put_contents('index.json', json_encode($tab));
+        if ($unique){
+            array_push($tab, $file);
+            file_put_contents('index.json', json_encode($tab));
+        }
+        
+        
     }
    
 
