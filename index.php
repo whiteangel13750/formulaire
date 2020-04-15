@@ -18,11 +18,12 @@ function showHome(): string {
 }
 
 function insertUser() {
-   
+if(!empty($_POST['pseudo'] && $_POST['password'])){
 $user = new Utilisateurs();
-$user = setPseudo($pseudo);
-$user = setPassword($password);
+$user = setPseudo($_POST['pseudo']);
+$user = setPassword(password_hash($_POST['password'], PASSWORD_DEFAULT));
 $user->save_user();
+}
 header('Location:index.php');
 
 }
