@@ -9,6 +9,8 @@ switch($route) {
         break;
     case "insert_user" : insertUser();
         break;
+    case "connect_user" : connectUser();
+        break;
     default : showHome();
 }
 
@@ -18,15 +20,30 @@ function showHome(): string {
 }
 
 function insertUser() {
-if(!empty($_POST['pseudo'] && $_POST['password'])){
+if(!empty($_POST['pseudo'] && !empty($_POST['password']))){
 $user = new Utilisateurs();
-$user = setPseudo($_POST['pseudo']);
-$user = setPassword(password_hash($_POST['password'], PASSWORD_DEFAULT));
+$user-> setPseudo($_POST['pseudo']);
+$user-> setPassword(password_hash($_POST['password'], PASSWORD_DEFAULT));
 $user->save_user();
+$pseudo= isset($_POST['pseudo'])? $_POST['pseudo'] : "null";
+$password= isset($_POST['password'])? $_POST['password'] : "null";
+$_SESSION['pseudo']=$pseudo;
+$_SESSION['password']=$password;
 }
 header('Location:index.php');
 
 }
+
+function connectUser() {
+    echo "ok";
+    if(!empty($_POST['pseudo'] && !empty($_POST['password']))){
+        $user = new Utilisateurs();
+        $user-> setPseudo($_POST['pseudo']);
+        $user-> setPassword($_POST['password']);
+        $user->verify_user();
+        }
+    }
+
 
 ?>
 
@@ -40,6 +57,6 @@ header('Location:index.php');
 <body>
 
     <?php require "$view" ?>
-
+    
 </body>
 </html> 
