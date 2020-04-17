@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 class Utilisateurs {
     public $idUtilisateur;
     public $adresse;

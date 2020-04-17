@@ -1,7 +1,11 @@
 <?php
 
-require 'utilisateurs.php';
-require 'tache.php';
+spl_autoload_register(function ($class) {
+    if(file_exists("models/$class.php")){
+        require_once "models/$class.php";
+    }
+});
+
 $route = isset($_REQUEST["route"])? $_REQUEST["route"] : "home";
 
 switch($route) {
@@ -10,6 +14,8 @@ switch($route) {
     case "insert_user" : insertUser();
         break;
     case "connect_user" : connectUser();
+        break;
+    case "insert_tache" : insertTache();
         break;
     case "deconnect" : deconnectUser();
         break;
@@ -51,6 +57,15 @@ function connectUser() {
     header('Location:index.php');
         }
 
+    function insertTache() {
+         if(!empty($_POST['description'] && !empty($_POST['date']))){
+            $user = new Tache();
+            $user-> setDescription($_POST['description']);
+            $user-> setDate($_POST['date']);
+            $user->save_tache();
+            header('Location:index.php');
+            }
+    }
 
 ?>
 
@@ -63,7 +78,7 @@ function connectUser() {
 </head>
 <body>
 
-    <?php require "$view" ?>
+    <?php require "$view"?>
     
 </body>
 </html> 
