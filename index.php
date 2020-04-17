@@ -11,6 +11,8 @@ switch($route) {
         break;
     case "connect_user" : connectUser();
         break;
+    case "deconnect" : deconnectUser();
+        break;
     default : showHome();
 }
 
@@ -43,6 +45,11 @@ function connectUser() {
         $user->verify_user();
         }
     }
+
+    function deconnectUser() {
+    unset($_SESSION['pseudo']);
+    header('Location:index.php');
+        }
 
 
 ?>

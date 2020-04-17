@@ -64,7 +64,6 @@ class Utilisateurs {
                 $_SESSION['password']=$element1->password;
                 header('Location:monespace.php');
             }else {
-                echo "Connexion non OK";
                 header('Location:index.php');
             }
         }
