@@ -9,7 +9,7 @@ class Utilisateurs {
     private $password;
 
     function __construct($id=null) {
-        $this->pdo = new PDO();
+        $this->pdo = new PDO(DATABASE, LOGIN, PASSWD);
     }
 
     public function getIdUtilisateur() {
