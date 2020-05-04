@@ -2,11 +2,16 @@
 
 require 'utilisateurs.php';
 
-class Tache {
+class Tache extends Dbconnect {
+    protected $pdo;
     public $idTache;
     public $description;
     public $date;
     public $idUtilisateur;
+
+    function __construct($id=null) {
+        parent::__construct($id);
+}
 
     public function getIdUtilisateur() {
         return $this->idUtilisateur;

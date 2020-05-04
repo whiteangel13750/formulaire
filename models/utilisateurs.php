@@ -1,15 +1,15 @@
 <?php
 session_start();
 
-class Utilisateurs {
-    private $pdo;
+class Utilisateurs extends Dbconnect {
+    protected $pdo;
     private $idUtilisateur;
     private $adresse;
     private $pseudo;
     private $password;
 
     function __construct($id=null) {
-        $this->pdo = new PDO(DATABASE, LOGIN, PASSWD);
+            parent::__construct($id);
     }
 
     public function getIdUtilisateur() {
