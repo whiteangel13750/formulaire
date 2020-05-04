@@ -52,6 +52,22 @@ class Tache extends Dbconnect {
         array_push($tab,["idTache"=>sizeof($tab)+1,"idUtilisateur"=>$_SESSION['id'], "description"=> $this->description, "date" => $this->date]);
         file_put_contents('tache.json', json_encode($tab));       
     }
+
+    public function insert() {
+
+    };
+    public function selectAll(){
+
+    };
+    public function select(){
+
+    };
+    public function update(){
+
+    };
+    public function delete(){
+        
+    };
 }
 
 ?>

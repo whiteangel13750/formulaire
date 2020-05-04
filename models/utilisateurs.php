@@ -74,5 +74,21 @@ class Utilisateurs extends Dbconnect {
             }
         }
     }
+
+    public function insert() {
+
+    };
+    public function selectAll(){
+
+    };
+    public function select(){
+
+    };
+    public function update(){
+
+    };
+    public function delete(){
+        
+    };
 }
 ?>
