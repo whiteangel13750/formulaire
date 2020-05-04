@@ -1,12 +1,16 @@
 <?php
-
 session_start();
 
 class Utilisateurs {
-    public $idUtilisateur;
-    public $adresse;
-    public $pseudo;
-    public $password;
+    private $pdo;
+    private $idUtilisateur;
+    private $adresse;
+    private $pseudo;
+    private $password;
+
+    function __construct($id=null) {
+        $this->pdo = new PDO();
+    }
 
     public function getIdUtilisateur() {
         return $this->idUtilisateur;
