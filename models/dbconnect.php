@@ -1,6 +1,6 @@
 <?php
 
-class DbConnect {
+class DbConnect implements Crud {
     protected $pdo;
     protected $id;
     

@@ -9,7 +9,6 @@ class Utilisateurs extends Dbconnect {
     private $password;
 
     function __construct($id=null) {
-            parent::__construct($id);
     }
 
     public function getIdUtilisateur() {

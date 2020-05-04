@@ -10,7 +10,6 @@ class Tache extends Dbconnect {
     public $idUtilisateur;
 
     function __construct($id=null) {
-        parent::__construct($id);
 }
 
     public function getIdUtilisateur() {
