@@ -1,6 +1,6 @@
 <?php
 
-class DbConnect implements Crud {
+abstract class Dbconnect implements Crud {
     protected $pdo;
     protected $id;
     
@@ -12,5 +12,11 @@ class DbConnect implements Crud {
     function setId($id) {
         $this->id = $id;
     }
+
+    abstract function selectAll();
+    abstract function insert();
+    abstract function select();
+    abstract function update();
+    abstract function delete();
 }
 ?>

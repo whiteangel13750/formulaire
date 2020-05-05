@@ -69,6 +69,14 @@ function connectUser() {
             }
     }
 
+    function showMembre() {
+
+    $user = new Utilisateurs();
+    $user->selectAll();
+    
+    return "membre.php";
+        }
+
 ?>
 
 <!DOCTYPE html>

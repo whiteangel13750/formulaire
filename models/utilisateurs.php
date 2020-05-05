@@ -2,13 +2,13 @@
 session_start();
 
 class Utilisateurs extends Dbconnect {
-    protected $pdo;
     private $idUtilisateur;
     private $adresse;
     private $pseudo;
     private $password;
 
     function __construct($id=null) {
+        parent::__construct($id);
     }
 
     public function getIdUtilisateur() {
@@ -74,20 +74,36 @@ class Utilisateurs extends Dbconnect {
         }
     }
 
-    public function insert() {
+   public function insert() {
 
-    };
+}
+
     public function selectAll(){
+        $query ="SELECT * FROM utilisateur;";
+        $result = $this->pdo->prepare($query);
+        $result->execute();
+        $datas= $result->fetchAll();
 
-    };
+        $tab=[];
+
+        var_dump($datas);
+
+        foreach($datas as $data) {
+            $current = new Utilisateurs();
+            $current->setId($data['IDUTILISATEUR']);
+            array_push($tab, $current);
+            }
+            return $tab;
+
+    }
     public function select(){
 
-    };
+    }
     public function update(){
 
-    };
-    public function delete(){
+    }
+   public function delete(){
         
-    };
+    }
 }
 ?>
