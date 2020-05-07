@@ -2,11 +2,21 @@
 
 require "conf/global.php";
 
+// FRONT CONTROLLER -> Toutes les requêtes arrivent ici et sont traitées par le ROUTER
+// ------------------------------------------------------------------------------------
+// 1. INCLUSIONS CLASSES
+// Dans un premier temps, nous allons inclure les fichiers de nos classes ici pour pouvoir les utiliser
+
 spl_autoload_register(function ($class) {
     if(file_exists("models/$class.php")){
         require_once "models/$class.php";
     }
 });
+
+
+// ------------------------------------------------------------------------------------
+// 2. ROUTER
+// Structure permettant d'appeler une action en fonction de la requête utilisateur
 
 $route = isset($_REQUEST["route"])? $_REQUEST["route"] : "home";
 
@@ -24,28 +34,45 @@ switch($route) {
     default : showHome();
 }
 
+// ------------------------------------------------------------------------------------
+// 3. FONCTIONS DE CONTROLE
+// Actions déclenchées en fonction du choix de l'utilisateur
+// 1 choix = 1 fonction avec deux "types" de fonctions, celles qui mèneront à un affichage, et celles qui seront redirigées (vers un choix conduisant à un affichage)
+
+// Fonctionnalité(s) d'affichage :
+
 function showHome(): string {
 
     return "home.html";
 }
+
+function showMembre() {
+
+    $user = new Utilisateurs();
+    $user->selectAll();
+    
+    return "membre.php";
+        }
+    
+
+// Fonctionnalité(s) redirigées :
 
 function insertUser() {
 if(!empty($_POST['pseudo'] && !empty($_POST['password']))){
 $user = new Utilisateurs();
 $user-> setPseudo($_POST['pseudo']);
 $user-> setPassword(password_hash($_POST['password'], PASSWORD_DEFAULT));
-$user->save_user();
+$user->insert();
 $pseudo= isset($_POST['pseudo'])? $_POST['pseudo'] : "null";
 $password= isset($_POST['password'])? $_POST['password'] : "null";
 $_SESSION['pseudo']=$pseudo;
 $_SESSION['password']=$password;
 }
-header('Location:index.php');
+// header('Location:index.php');
 
 }
 
 function connectUser() {
-    echo "ok";
     if(!empty($_POST['pseudo'] && !empty($_POST['password']))){
         $user = new Utilisateurs();
         $user-> setPseudo($_POST['pseudo']);
@@ -69,13 +96,9 @@ function connectUser() {
             }
     }
 
-    function showMembre() {
-
-    $user = new Utilisateurs();
-    $user->selectAll();
-    
-    return "membre.php";
-        }
+    // ------------------------------------------------------------------------------------
+// 4. TEMPLATE
+// Affichage du système de templates HTML
 
 ?>
 

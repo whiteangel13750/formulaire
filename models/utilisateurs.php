@@ -1,20 +1,27 @@
 <?php
+
+// Demarre une session utilisateur
 session_start();
 
+// La classe instancie un nouvel utilisateur. Elle est liée à DbConnect qui permet de lier la base de donnée à la classe. 
+// Elle requiert les méthodes afin d'agrémenter la base
 class Utilisateurs extends Dbconnect {
     private $idUtilisateur;
     private $adresse;
     private $pseudo;
     private $password;
 
+// Le construct permet d'établir une structure de notre utilisateur
     function __construct($id=null) {
         parent::__construct($id);
     }
 
+// La syntaxe get permet de lier une propriété d'un objet à une fonction qui sera appelée lorsqu'on accédera à la propriété.
     public function getIdUtilisateur() {
         return $this->idUtilisateur;
     }
 
+// La syntaxe set permet de lier une propriété d'un objet à une fonction qui sera appelée à chaque tentative de modification de cette propriété.
     public function setIdUtilisateur(int $id) {
         $this->idUtilisateur = $id;
     }
@@ -44,6 +51,9 @@ class Utilisateurs extends Dbconnect {
         $this->password = $password;
     }
 
+    // Permet d'enregistrer un utilisateur en encodant le fichier json. Unique permet de vérifier si le pseudo et le password
+    // existe déja ou non.
+
     public function save_user() {
         $file = file_get_contents("index.json");
         $tab = json_decode($file, false, 512, 0);
@@ -58,6 +68,8 @@ class Utilisateurs extends Dbconnect {
             file_put_contents('index.json', json_encode($tab));
         }        
     }
+
+     // Permet de vérifier si un utilisateur est dans le fichier json. 
 
     public function verify_user(){
         $file = file_get_contents("index.json");
@@ -74,19 +86,26 @@ class Utilisateurs extends Dbconnect {
         }
     }
 
-   public function insert() {
+    // Permet d'inserer un utilisateur dans la base de donnée. 
 
+public function insert(){
+    var_dump($this);
+    $query1 = "INSERT INTO utilisateur(PSEUDO,PASSWORD) VALUES ('$this->pseudo','$this->password')";
+    $result1 = $this->pdo->prepare($query1);
+    $result1->execute();
+    $this->idUtilisateur = $this->pdo->lastInsertId();
+    return $this;
 }
 
-    public function selectAll(){
+  // Permet de selectionner tous les utilisateurs dans la base de donnée. 
+
+public function selectAll(){
         $query ="SELECT * FROM utilisateur;";
         $result = $this->pdo->prepare($query);
         $result->execute();
         $datas= $result->fetchAll();
 
         $tab=[];
-
-        var_dump($datas);
 
         foreach($datas as $data) {
             $current = new Utilisateurs();
@@ -96,12 +115,24 @@ class Utilisateurs extends Dbconnect {
             return $tab;
 
     }
-    public function select(){
 
+// Permet de selectionner un utilisateurs dans la base de donnée. 
+    
+public function select(){
+    $query2 = "SELECT * FROM utilisateur WHERE IDUTILISATEUR = $this->idUtilisateur;";
+    $result2 = $this->pdo->prepare($query2);
+    $result2->execute();
+    $data2 = $result2->fetch();
+            //appel aux setters de l'objet
+        return $this;
     }
+
+// Permet de modifier un utilisateur dans la base de donnée. 
     public function update(){
 
     }
+
+// Permet de supprimer un utilisateur dans la base de donnée. 
    public function delete(){
         
     }

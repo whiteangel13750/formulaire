@@ -1,5 +1,6 @@
 <?php
 
+// Il permet d'établir une connexion avec la base de donnée.
 abstract class Dbconnect implements Crud {
     protected $pdo;
     protected $id;
