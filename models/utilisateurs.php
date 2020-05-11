@@ -1,8 +1,5 @@
 <?php
 
-// Demarre une session utilisateur
-session_start();
-
 // La classe instancie un nouvel utilisateur. Elle est liée à DbConnect qui permet de lier la base de donnée à la classe. 
 // Elle requiert les méthodes afin d'agrémenter la base
 class Utilisateurs extends Dbconnect {
@@ -89,12 +86,20 @@ class Utilisateurs extends Dbconnect {
     // Permet d'inserer un utilisateur dans la base de donnée. 
 
 public function insert(){
-    var_dump($this);
-    $query1 = "INSERT INTO utilisateur(PSEUDO,PASSWORD) VALUES ('$this->pseudo','$this->password')";
-    $result1 = $this->pdo->prepare($query1);
-    $result1->execute();
-    $this->idUtilisateur = $this->pdo->lastInsertId();
-    return $this;
+    // var_dump($this);
+    // $query1 = "INSERT INTO utilisateur(PSEUDO,PASSWORD) VALUES ('$this->pseudo','$this->password')";
+    // $result1 = $this->pdo->prepare($query1);
+    // $result1->execute();
+    // $this->idUtilisateur = $this->pdo->lastInsertId();
+    // return $this;
+
+$query="INSERT INTO utilisateur(PSEUDO, PASSWORD) VALUES (:pseudo,:password)";
+$result=$this->pdo->prepare($query);
+$result->bindValue(':pseudo',$this->pseudo,PDO::PARAM_STR);
+$result->bindValue(':password',$this->passwd,PDO::PARAM_STR);
+$result->execute();
+$this->id=$this->pdo->lastInsertId();
+return$this;
 }
 
   // Permet de selectionner tous les utilisateurs dans la base de donnée. 

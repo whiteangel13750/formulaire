@@ -1,5 +1,9 @@
 <?php
 
+// Demarre une session utilisateur
+session_start();
+
+// On requiere le fichier global qui correspond à la base de donnée
 require "conf/global.php";
 
 // FRONT CONTROLLER -> Toutes les requêtes arrivent ici et sont traitées par le ROUTER
